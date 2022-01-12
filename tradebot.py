@@ -56,9 +56,6 @@ def on_close(ws, close_status_code, close_msg):
     money_end += investment[-1]
     print(f'Результат: ${money_end}', '\n')
 
-    beginning = closes[0]
-    end = closes[-1]
-
     #Показатели
     btc_return = np.mean(np.log(np.array(closes[1:]) / np.array(closes[:-1])))
     bot_return = np.mean(np.log(np.array(real_time_port_value[1:]) / np.array(real_time_port_value[:-1])))
@@ -75,7 +72,7 @@ def on_close(ws, close_status_code, close_msg):
     print(f'Коэффицент Шарпа для бота: {bot_charpe_ratio}', '\n')
 
 def on_message(ws, message):
-    global portfolio, investment, closes, highs, lows, money_end, core_to_trade, core_quantity, real_time_port_value
+    global portfolio, closes, highs, lows, money_end, core_to_trade, core_quantity, real_time_port_value
     json_message = json.loads(message)
     cs = json_message['k']
     candle_closed, close, high, low, open, volume = cs['x'], cs['c'], cs['h'], cs['l'], cs['o'], cs['v']
